@@ -176,6 +176,19 @@ Then you can install pgcli:
     $ sudo pip install pgcli
 
 
+Docker
+======
+
+To build the image:
+
+::
+    $ docker build -t pgcli .
+
+To create a container from the image:
+
+::
+    $ docker run --rm -ti pgcli pgcli <ARGS>
+
 Thanks:
 -------
 
