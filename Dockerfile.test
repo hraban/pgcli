@@ -1,0 +1,18 @@
+FROM python:2.7
+
+# Separate layers for deps and app to help caching
+COPY requirements-dev.txt /app/
+RUN cd /app && pip install -r requirements-dev.txt
+
+# Assume a postgres container is linked by name as "postgres"
+COPY . /app
+RUN cd /app && \
+    pip install -e . && \
+    sed -i -e 's/localhost/postgres/' -e 's/_pass.*/_pass = foo/' tests/behave.ini
+
+WORKDIR /app/tests
+
+# TODO: coverage run --source pgcli -m py.test
+CMD behave
+
+# vim: ft=dockerfile
